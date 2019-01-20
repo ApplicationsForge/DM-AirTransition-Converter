@@ -3,10 +3,14 @@
 
 #include <QObject>
 #include <QRegularExpression>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QTextStream>
 
 #include "models/repository/repository.h"
 #include "models/services/load_7kam_program/load_7kam_program_interactor.h"
 #include "models/services/find_points/find_points_interactor.h"
+#include "models/services/replace_air_transitions/replace_air_transitions_interactor.h"
 
 class Router : public QObject
 {

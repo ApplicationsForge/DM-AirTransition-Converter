@@ -46,14 +46,29 @@ void Router::read7kamFile(QString filePath)
 
 void Router::replaceAirTransitions(double velocity)
 {
+    m_repository->setTransitionVelocity(velocity);
+
     FindPointsInteractor findPoints;
     m_repository->setPoints(findPoints.execute(m_repository->program()));
 
-    /*QList<SML02Point> points = m_repository->points();
-    for(auto point : points)
+    ReplaceAirTransitionsInteractor replaceAirTransitions;
+    m_repository->setProgram(replaceAirTransitions.execute(m_repository->program(), m_repository->points(), m_repository->transitionVelocity()));
+
+    //save to file
+    QString filename = QFileDialog::getSaveFileName(nullptr, "Выберите место сохранения прогрммы", "", "*.7kam");
+    if(filename.length() > 0)
     {
-        qDebug() << point.index() << point.x() << point.y() << point.z();
-    }*/
+        QFile file(filename);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            qDebug() << "error while writing";
+            return;
+        }
+
+        QTextStream out(&file);
+        out << m_repository->program().join("\n");// write(m_repository->program().join("\n").toUtf8());
+        file.close();
+    }
 }
 
 void Router::onLoad7kamProgramInteractor_FileLoaded(QString content)

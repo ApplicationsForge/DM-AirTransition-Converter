@@ -32,7 +32,8 @@ SOURCES += \
     models/utils/file_reader.cpp \
     models/services/load_7kam_program/load_7kam_program_interactor.cpp \
     models/services/find_points/find_points_interactor.cpp \
-    models/types/sml_02_point.cpp
+    models/types/sml_02_point.cpp \
+    models/services/replace_air_transitions/replace_air_transitions_interactor.cpp
 
 HEADERS += \
         gui/mainwindow.h \
@@ -41,7 +42,8 @@ HEADERS += \
     models/utils/file_reader.h \
     models/services/load_7kam_program/load_7kam_program_interactor.h \
     models/services/find_points/find_points_interactor.h \
-    models/types/sml_02_point.h
+    models/types/sml_02_point.h \
+    models/services/replace_air_transitions/replace_air_transitions_interactor.h
 
 FORMS += \
         gui/mainwindow.ui
