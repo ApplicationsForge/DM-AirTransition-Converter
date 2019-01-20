@@ -60,6 +60,16 @@ void MainWindow::on_selectFileToolButton_clicked()
 
 void MainWindow::on_applyPushButton_clicked()
 {
-    Router& router = Router::getInstance();
-    router.replaceAirTransitions();
+    bool ok = false;
+    QString velocity = ui->transitionVelocityLineEdit->text();
+    double velocityValue = velocity.toDouble(&ok);
+    if(ok)
+    {
+        Router& router = Router::getInstance();
+        router.replaceAirTransitions(velocityValue);
+    }
+    else
+    {
+        QMessageBox(QMessageBox::Warning, "Ошибка", "Значение скорости должно быть числовым.").exec();
+    }
 }

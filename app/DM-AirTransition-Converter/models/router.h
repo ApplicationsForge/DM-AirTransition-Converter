@@ -19,7 +19,7 @@ public:
 
      void read7kamFile(QString filePath);
 
-     void replaceAirTransitions();
+     void replaceAirTransitions(double velocity);
 
 private:
     explicit Router(QObject *parent = nullptr);
