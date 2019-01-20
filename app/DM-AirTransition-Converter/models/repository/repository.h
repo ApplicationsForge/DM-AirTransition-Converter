@@ -11,11 +11,19 @@ class Repository : public QObject
 public:
     explicit Repository(QObject *parent = nullptr);
 
-    QString helloString() const;
-    void setHelloString(const QString &helloString);
+    QString programFilePath() const;
+    void setProgramFilePath(const QString &programFilePath);
+
+    double transitionVelocity() const;
+    void setTransitionVelocity(double transitionVelocity);
+
+    QStringList program() const;
+    void setProgram(const QStringList &program);
 
 private:
-    QString m_helloString = "Hello World!";
+    QString m_programFilePath;
+    double m_transitionVelocity;
+    QStringList m_program;
 
     friend class Router;
 

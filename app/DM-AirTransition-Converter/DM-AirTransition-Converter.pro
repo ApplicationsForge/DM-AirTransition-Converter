@@ -28,12 +28,16 @@ SOURCES += \
         main.cpp \
         gui/mainwindow.cpp \
     models/repository/repository.cpp \
-    models/router.cpp
+    models/router.cpp \
+    models/utils/file_reader.cpp \
+    models/services/load_7kam_program/load_7kam_program_interactor.cpp
 
 HEADERS += \
         gui/mainwindow.h \
     models/repository/repository.h \
-    models/router.h
+    models/router.h \
+    models/utils/file_reader.h \
+    models/services/load_7kam_program/load_7kam_program_interactor.h
 
 FORMS += \
         gui/mainwindow.ui

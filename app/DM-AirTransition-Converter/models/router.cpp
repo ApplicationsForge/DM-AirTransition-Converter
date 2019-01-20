@@ -2,7 +2,8 @@
 
 Router::Router(QObject *parent) :
     QObject(parent),
-    m_repository(new Repository(this))
+    m_repository(new Repository(this)),
+    m_load7kamProgram(new Load7kamProgramInteractor(this))
 {
     setupConnections();
 }
@@ -29,11 +30,24 @@ Repository *Router::getRepository()
 
 void Router::setupConnections()
 {
-
+    QObject::connect(m_load7kamProgram.data(), SIGNAL(fileLoaded(QString)), this, SLOT(onLoad7kamProgramInteractor_FileLoaded(QString)));
 }
 
 void Router::resetConnections()
 {
+    QObject::disconnect(m_load7kamProgram.data(), SIGNAL(fileLoaded(QString)), this, SLOT(onLoad7kamProgramInteractor_FileLoaded(QString)));
+}
 
+void Router::read7kamFile(QString filePath)
+{
+    m_repository->setProgramFilePath(filePath);
+    m_load7kamProgram.data()->execute(filePath);
+}
+
+void Router::onLoad7kamProgramInteractor_FileLoaded(QString content)
+{
+    QStringList program = content.split(QRegularExpression{R"-((\r\n?|\n))-"});
+    m_repository->setProgram(program);
+    emit programLoaded();
 }
 
