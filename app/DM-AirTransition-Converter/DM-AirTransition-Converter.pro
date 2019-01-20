@@ -30,14 +30,18 @@ SOURCES += \
     models/repository/repository.cpp \
     models/router.cpp \
     models/utils/file_reader.cpp \
-    models/services/load_7kam_program/load_7kam_program_interactor.cpp
+    models/services/load_7kam_program/load_7kam_program_interactor.cpp \
+    models/services/find_points/find_points_interactor.cpp \
+    models/types/sml_02_point.cpp
 
 HEADERS += \
         gui/mainwindow.h \
     models/repository/repository.h \
     models/router.h \
     models/utils/file_reader.h \
-    models/services/load_7kam_program/load_7kam_program_interactor.h
+    models/services/load_7kam_program/load_7kam_program_interactor.h \
+    models/services/find_points/find_points_interactor.h \
+    models/types/sml_02_point.h
 
 FORMS += \
         gui/mainwindow.ui

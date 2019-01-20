@@ -44,6 +44,18 @@ void Router::read7kamFile(QString filePath)
     m_load7kamProgram.data()->execute(filePath);
 }
 
+void Router::replaceAirTransitions()
+{
+    FindPointsInteractor findPoints;
+    m_repository->setPoints(findPoints.execute(m_repository->program()));
+
+    QList<SML02Point> points = m_repository->points();
+    for(auto point : points)
+    {
+        qDebug() << point.index() << point.x() << point.y() << point.z();
+    }
+}
+
 void Router::onLoad7kamProgramInteractor_FileLoaded(QString content)
 {
     QStringList program = content.split(QRegularExpression{R"-((\r\n?|\n))-"});

@@ -29,6 +29,7 @@ private slots:
     void onRouter_ProgramLoaded();
 
     void on_selectFileToolButton_clicked();
+    void on_applyPushButton_clicked();
 };
 
 #endif // MAINWINDOW_H

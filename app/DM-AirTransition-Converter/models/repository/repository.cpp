@@ -4,7 +4,8 @@ Repository::Repository(QObject *parent) :
     QObject(parent),
     m_programFilePath(""),
     m_transitionVelocity(0.0),
-    m_program(QStringList())
+    m_program(QStringList()),
+    m_points(QList<SML02Point>())
 {
 
 }
@@ -37,4 +38,14 @@ QStringList Repository::program() const
 void Repository::setProgram(const QStringList &program)
 {
     m_program = program;
+}
+
+QList<SML02Point> Repository::points() const
+{
+    return m_points;
+}
+
+void Repository::setPoints(const QList<SML02Point> &points)
+{
+    m_points = points;
 }

@@ -57,3 +57,9 @@ void MainWindow::on_selectFileToolButton_clicked()
         router.read7kamFile(path);
     }
 }
+
+void MainWindow::on_applyPushButton_clicked()
+{
+    Router& router = Router::getInstance();
+    router.replaceAirTransitions();
+}

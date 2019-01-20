@@ -6,6 +6,7 @@
 
 #include "models/repository/repository.h"
 #include "models/services/load_7kam_program/load_7kam_program_interactor.h"
+#include "models/services/find_points/find_points_interactor.h"
 
 class Router : public QObject
 {
@@ -17,6 +18,8 @@ public:
      Repository* getRepository();
 
      void read7kamFile(QString filePath);
+
+     void replaceAirTransitions();
 
 private:
     explicit Router(QObject *parent = nullptr);
