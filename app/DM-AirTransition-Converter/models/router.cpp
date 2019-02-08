@@ -66,6 +66,7 @@ void Router::replaceAirTransitions(double velocity)
         }
 
         QTextStream out(&file);
+        out.setCodec("utf-8");
         out << m_repository->program().join("\n");// write(m_repository->program().join("\n").toUtf8());
         file.close();
     }

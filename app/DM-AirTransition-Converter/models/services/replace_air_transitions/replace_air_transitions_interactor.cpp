@@ -107,6 +107,6 @@ QString ReplaceAirTransitionsInteractor::buildTTLineCommand(unsigned int firstPo
     }
     else
     {
-        return "0 " + QString::number(firstPointIndex) + "," + QString::number(secondPointIndex) + ", ," + QString::number(velocity);
+        return "0 " + QString::number(firstPointIndex) + "," + QString::number(secondPointIndex) + ", ," + QString::number(height) + "," + QString::number(velocity);
     }
 }
