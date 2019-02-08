@@ -9,48 +9,11 @@ QStringList ReplaceAirTransitionsInteractor::execute(QStringList program, QList<
 {
     QStringList result = QStringList();
 
+    program = this->removePoints(program);
+
     for(auto line : program)
     {
-        QStringList splittedLineBySpace = line.split(QRegExp(" "), QString::SkipEmptyParts);
-        if(!splittedLineBySpace.isEmpty())
-        {
-            QString index = splittedLineBySpace.first();
-            QString params = splittedLineBySpace.last();
-            if(index.toInt() == 0)
-            {
-                QStringList splittedParams = params.split(QRegExp(","), QString::SkipEmptyParts);
-                bool needToReplace = false;
-                for(auto param : splittedParams)
-                {
-                    if(param == "^")
-                    {
-                        needToReplace = true;
-                        break;
-                    }
-                }
-
-                if(needToReplace)
-                {
-                    QStringList replacedAirTransition = this->replaceAirTransition(splittedParams, points, velocity);
-                    for(auto command : replacedAirTransition)
-                    {
-                        result.append(command);
-                    }
-                }
-                else
-                {
-                    result.append(line);
-                }
-            }
-            else
-            {
-                if(index.toInt() != 250)
-                {
-                    result.append(line);
-                }
-
-            }
-        }
+        result.append(this->resolveComand(line, points, velocity));
     }
 
     for(auto point : points)
@@ -59,6 +22,48 @@ QStringList ReplaceAirTransitionsInteractor::execute(QStringList program, QList<
     }
 
     return result;
+}
+
+QStringList ReplaceAirTransitionsInteractor::removePoints(QStringList program)
+{
+    QStringList result = {};
+    for(auto line : program)
+    {
+        SML02Command command = SML02Command(line);
+        if(command.index() != 250)
+        {
+            result.append(line);
+        }
+    }
+    return result;
+}
+
+QStringList ReplaceAirTransitionsInteractor::resolveComand(QString cmd, QList<SML02Point> &points, double maxVelocity)
+{
+    SML02Command command = SML02Command(cmd);
+    if(command.index() != 0)
+    {
+        return QStringList {cmd};
+    }
+
+
+    bool isNeedToReplace = false;
+    for(auto argument : command.arguments())
+    {
+        if(argument == "^")
+        {
+            isNeedToReplace = true;
+            break;
+        }
+    }
+
+    if(!isNeedToReplace)
+    {
+        return QStringList {cmd};
+    }
+
+    QStringList replacedAirTransition = this->replaceAirTransition(command.arguments(), points, maxVelocity);
+    return replacedAirTransition;
 }
 
 QStringList ReplaceAirTransitionsInteractor::replaceAirTransition(QStringList params, QList<SML02Point> &points, double velocity)
@@ -82,7 +87,6 @@ QStringList ReplaceAirTransitionsInteractor::replaceAirTransition(QStringList pa
         SML02Point fourthPoint = points[int(endPointIndex)];
         SML02Point thirdPoint = SML02Point(points.length(), fourthPoint.x(), fourthPoint.y(), fourthPoint.z() + height);
         points.append(thirdPoint);
-
 
         QString firstCommand = this->buildTTLineCommand(firstPoint.index(), secondPoint.index(), false, 0.0, cuttingVelocity);
         QString secondCommand = this->buildTTLineCommand(secondPoint.index(), thirdPoint.index(), false, 0.0, velocity);
