@@ -33,7 +33,8 @@ SOURCES += \
     models/services/load_7kam_program/load_7kam_program_interactor.cpp \
     models/services/find_points/find_points_interactor.cpp \
     models/types/sml_02_point.cpp \
-    models/services/replace_air_transitions/replace_air_transitions_interactor.cpp
+    models/services/replace_air_transitions/replace_air_transitions_interactor.cpp \
+    models/types/sml_02_command.cpp
 
 HEADERS += \
         gui/mainwindow.h \
@@ -43,7 +44,8 @@ HEADERS += \
     models/services/load_7kam_program/load_7kam_program_interactor.h \
     models/services/find_points/find_points_interactor.h \
     models/types/sml_02_point.h \
-    models/services/replace_air_transitions/replace_air_transitions_interactor.h
+    models/services/replace_air_transitions/replace_air_transitions_interactor.h \
+    models/types/sml_02_command.h
 
 FORMS += \
         gui/mainwindow.ui

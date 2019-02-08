@@ -1,6 +1,7 @@
 #ifndef SML_02_POINT_H
 #define SML_02_POINT_H
 
+#include <QString>
 
 class SML02Point
 {
@@ -17,6 +18,8 @@ public:
 
     double z() const;
     void setZ(double z);
+
+    QString toString();
 
 private:
     unsigned int m_index;

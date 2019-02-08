@@ -5,6 +5,7 @@
 #include <QDebug>
 
 #include "models/types/sml_02_point.h"
+#include "models/types/sml_02_command.h"
 
 class ReplaceAirTransitionsInteractor
 {
@@ -14,8 +15,10 @@ public:
     QStringList execute(QStringList program, QList<SML02Point> points, double velocity);
 
 private:
-    QStringList replaceAirTransition(QStringList params, QList<SML02Point> points, double velocity);
-    QString buildSecondCommand(unsigned int beginPointIndex, unsigned int endPointIndex, QList<SML02Point> points, double velocity);
+    QStringList removePoints(QStringList program);
+    QStringList resolveComand(QString cmd, QList<SML02Point> &points, double maxVelocity);
+    QStringList replaceAirTransition(QStringList params, QList<SML02Point> &points, double velocity);
+    QString buildTTLineCommand(unsigned int firstPointIndex, unsigned int secondPointIndex, bool airTransition, double height, double velocity);
 };
 
 #endif // REPLACE_AIR_TRANSITIONS_INTERACTOR_H
