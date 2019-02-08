@@ -14,8 +14,8 @@ public:
     QStringList execute(QStringList program, QList<SML02Point> points, double velocity);
 
 private:
-    QStringList replaceAirTransition(QStringList params, QList<SML02Point> points, double velocity);
-    QString buildSecondCommand(unsigned int beginPointIndex, unsigned int endPointIndex, QList<SML02Point> points, double velocity);
+    QStringList replaceAirTransition(QStringList params, QList<SML02Point> &points, double velocity);
+    QString buildTTLineCommand(unsigned int firstPointIndex, unsigned int secondPointIndex, bool airTransition, double height, double velocity);
 };
 
 #endif // REPLACE_AIR_TRANSITIONS_INTERACTOR_H

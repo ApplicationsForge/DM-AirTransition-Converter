@@ -44,15 +44,24 @@ QStringList ReplaceAirTransitionsInteractor::execute(QStringList program, QList<
             }
             else
             {
-                result.append(line);
+                if(index.toInt() != 250)
+                {
+                    result.append(line);
+                }
+
             }
         }
+    }
+
+    for(auto point : points)
+    {
+        result.append(point.toString());
     }
 
     return result;
 }
 
-QStringList ReplaceAirTransitionsInteractor::replaceAirTransition(QStringList params, QList<SML02Point> points, double velocity)
+QStringList ReplaceAirTransitionsInteractor::replaceAirTransition(QStringList params, QList<SML02Point> &points, double velocity)
 {
     QStringList result = QStringList();
     if(params.length() >= 4)
@@ -66,9 +75,18 @@ QStringList ReplaceAirTransitionsInteractor::replaceAirTransition(QStringList pa
             cuttingVelocity = params[4].toDouble();
         }
 
-        QString firstCommand = "4 0.00,0.00," + QString::number(height) + "," + QString::number(cuttingVelocity);
-        QString secondCommand = this->buildSecondCommand(beginPointIndex, endPointIndex, points, velocity);
-        QString thirdCommand = "4 0.00,0.00," + QString::number(-1 * height) + "," + QString::number(cuttingVelocity);
+        SML02Point firstPoint = points[int(beginPointIndex)];
+        SML02Point secondPoint = SML02Point(points.length(), firstPoint.x(), firstPoint.y(), firstPoint.z() + height);
+        points.append(secondPoint);
+
+        SML02Point fourthPoint = points[int(endPointIndex)];
+        SML02Point thirdPoint = SML02Point(points.length(), fourthPoint.x(), fourthPoint.y(), fourthPoint.z() + height);
+        points.append(thirdPoint);
+
+
+        QString firstCommand = this->buildTTLineCommand(firstPoint.index(), secondPoint.index(), false, 0.0, cuttingVelocity);
+        QString secondCommand = this->buildTTLineCommand(secondPoint.index(), thirdPoint.index(), false, 0.0, velocity);
+        QString thirdCommand = this->buildTTLineCommand(thirdPoint.index(), fourthPoint.index(), false, 0.0, cuttingVelocity);
 
         result.append(firstCommand);
         result.append(secondCommand);
@@ -77,21 +95,14 @@ QStringList ReplaceAirTransitionsInteractor::replaceAirTransition(QStringList pa
     return result;
 }
 
-QString ReplaceAirTransitionsInteractor::buildSecondCommand(unsigned int beginPointIndex, unsigned int endPointIndex, QList<SML02Point> points, double velocity)
+QString ReplaceAirTransitionsInteractor::buildTTLineCommand(unsigned int firstPointIndex, unsigned int secondPointIndex, bool airTransition, double height, double velocity)
 {
-    QString result = "";
-
-    if(int (beginPointIndex) < points.length() && int (endPointIndex) < points.length())
+    if(airTransition)
     {
-        SML02Point beginPoint = points[int (beginPointIndex)];
-        SML02Point endPoint = points[int (endPointIndex)];
-
-        double dx = endPoint.x() - beginPoint.x();
-        double dy = endPoint.y() - beginPoint.y();
-        double dz = 0.0;
-
-        result = "4 " + QString::number(dx) + "," + QString::number(dy) + "," + QString::number(dz) + "," + QString::number(velocity);
+        return "0 " + QString::number(firstPointIndex) + "," + QString::number(secondPointIndex) + ",^," + QString::number(height) + "," + QString::number(velocity);
     }
-
-    return result;
+    else
+    {
+        return "0 " + QString::number(firstPointIndex) + "," + QString::number(secondPointIndex) + ", ," + QString::number(velocity);
+    }
 }

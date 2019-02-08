@@ -48,3 +48,8 @@ void SML02Point::setZ(double z)
 {
     m_z = z;
 }
+
+QString SML02Point::toString()
+{
+    return QString("250 " + QString::number(m_x) + "," + QString::number(m_y) + "," + QString::number(m_z));
+}
