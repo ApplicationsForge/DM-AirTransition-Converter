@@ -14,16 +14,14 @@ void FileReader::readFileInfo(QString path)
     QFile inputFile(path);
     if(inputFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        while(!inputFile.atEnd())
+        QTextStream readStream(&inputFile);
+        readStream.setCodec("Windows 1251");
+        while(!readStream.atEnd())
         {
-            content += inputFile.readLine();
+            content += readStream.readLine() + '\n';
             linesCount++;
             emit loading(linesCount);
         }
         emit successfullRead(content);
-
-        //QTextStream in(&inputFile);
-        //content = in.readAll();
-        //inputFile.close();
     }
 }
