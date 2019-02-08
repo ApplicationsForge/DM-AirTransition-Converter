@@ -2,6 +2,7 @@
 #define SML_02_COMMAND_H
 
 #include <QStringList>
+#include <QMessageBox>
 
 class SML02Command
 {

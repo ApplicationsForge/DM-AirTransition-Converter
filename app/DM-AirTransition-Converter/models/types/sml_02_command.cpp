@@ -12,6 +12,7 @@ SML02Command::SML02Command(QString cmd)
     QStringList splittedLineBySpace = cmd.split(QRegExp(" "), QString::SkipEmptyParts);
     if(splittedLineBySpace.isEmpty())
     {
+        QMessageBox(QMessageBox::Critical, "Invalid argument", "Команда не распознана").exec();
         throw std::invalid_argument("Команда не распознана");
     }
 
@@ -22,7 +23,8 @@ SML02Command::SML02Command(QString cmd)
     bool res = false;
     unsigned int index = rawIndex.toUInt(&res);
     if(!res) {
-        throw std::invalid_argument("Команда не распознана");
+        QMessageBox(QMessageBox::Critical, "Invalid argument", "Не распознан индекс команды").exec();
+        throw std::invalid_argument("Не распознан индекс команды");
     }
 
     m_index = index;

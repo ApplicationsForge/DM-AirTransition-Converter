@@ -73,7 +73,7 @@ void Router::replaceAirTransitions(double velocity)
 
 void Router::onLoad7kamProgramInteractor_FileLoaded(QString content)
 {
-    QStringList program = content.split(QRegularExpression{R"-((\r\n?|\n))-"});
+    QStringList program = content.split(QRegularExpression{R"-((\r\n?|\n))-"}, QString::SkipEmptyParts);
     m_repository->setProgram(program);
     emit programLoaded();
 }
