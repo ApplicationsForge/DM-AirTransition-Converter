@@ -16,8 +16,8 @@ SML02Command::SML02Command(QString cmd)
     }
 
     QString rawIndex = splittedLineBySpace.first();
-    QString rawParams = splittedLineBySpace.last();
-    QStringList params = rawParams.split(QRegExp(","), QString::SkipEmptyParts);
+    QString rawParams = cmd.remove(QRegExp("^" + rawIndex + "( )*"));
+    QStringList params = rawParams.split(QRegExp(","));
 
     bool res = false;
     unsigned int index = rawIndex.toUInt(&res);

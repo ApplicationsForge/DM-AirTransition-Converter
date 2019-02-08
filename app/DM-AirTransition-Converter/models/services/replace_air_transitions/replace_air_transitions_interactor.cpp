@@ -32,7 +32,7 @@ QStringList ReplaceAirTransitionsInteractor::removePoints(QStringList program)
         SML02Command command = SML02Command(line);
         if(command.index() != 250)
         {
-            result.append(line);
+            result.append(command.toString());
         }
     }
     return result;
@@ -43,7 +43,7 @@ QStringList ReplaceAirTransitionsInteractor::resolveComand(QString cmd, QList<SM
     SML02Command command = SML02Command(cmd);
     if(command.index() != 0)
     {
-        return QStringList {cmd};
+        return QStringList { command.toString() };
     }
 
 
@@ -59,7 +59,7 @@ QStringList ReplaceAirTransitionsInteractor::resolveComand(QString cmd, QList<SM
 
     if(!isNeedToReplace)
     {
-        return QStringList {cmd};
+        return QStringList { command.toString() };
     }
 
     QStringList replacedAirTransition = this->replaceAirTransition(command.arguments(), points, maxVelocity);
